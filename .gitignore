@@ -4,3 +4,4 @@
 # Pycharm
 .idea
 .pytest_cache
+*.pyc
