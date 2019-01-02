@@ -25,7 +25,7 @@ steps:
       from_secret: HUB_PASS
     repo: pcp1976/aggregate
     tags:
-      - 0.0.${DRONE_BUILD_NUMBER}
+      - ${DRONE_BUILD_NUMBER}
       - latest
 
 - name: upload archive
