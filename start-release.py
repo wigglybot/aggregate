@@ -5,6 +5,7 @@ from configparser import ConfigParser
 CONFIG_PATH = os.path.join(os.getcwd(), "app", "component", "config.ini")
 
 CONFIG = ConfigParser()
+CONFIG.optionxform = str
 CONFIG.read(CONFIG_PATH)
 CONFIG["version"]["REVISION"] = str(int(CONFIG["version"]["REVISION"]) + 1)
 
