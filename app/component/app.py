@@ -1,4 +1,4 @@
-from app.component.settings import *
+from settings import *
 import asyncio
 from photonpump import connect, exceptions
 import json
