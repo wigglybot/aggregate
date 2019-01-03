@@ -1,7 +1,7 @@
 import os
 from configobj import ConfigObj
 import logging
-import urllib
+import urllib.parse
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
