@@ -29,7 +29,7 @@ V_DATE = CONFIG["version"]["DATE"]
 CODENAME = CONFIG["version"]["CODENAME"]
 
 logging.basicConfig(format=LOGGER_FORMAT, datefmt='[%H:%M:%S]')
-log = logging.getLogger("aggregate")
+log = logging.getLogger(CONFIG["config"]["NAME"])
 
 """
 CRITICAL 50
