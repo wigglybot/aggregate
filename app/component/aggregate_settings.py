@@ -1,8 +1,10 @@
 import os
 from configobj import ConfigObj
-import logging
+from loguru import logger as log
 import urllib.parse
+import sys
 
+log.remove()
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 CONFIG = ConfigObj(os.path.join(dir_path, "config.ini"))
@@ -19,7 +21,7 @@ MONGO_PORT = int(os.getenv("MONGO_PORT", CONFIG[ENVIRON]["MONGO_PORT"]))
 MONGO_USER = urllib.parse.quote_plus(os.getenv("MONGO_USER", CONFIG[ENVIRON]["MONGO_USER"]))
 MONGO_PASS = urllib.parse.quote_plus(os.getenv("MONGO_PASS", CONFIG[ENVIRON]["MONGO_PASS"]))
 
-LOGGER_LEVEL = int(os.getenv("LOGGER_LEVEL", CONFIG[ENVIRON]["LOGGER_LEVEL"]))
+LOGGER_LEVEL = os.getenv("LOGGER_LEVEL", CONFIG[ENVIRON]["LOGGER_LEVEL"])
 LOGGER_FORMAT = '%(asctime)s [%(name)s] %(message)s'
 
 V_MA = CONFIG["version"]["MAJOR"]
@@ -28,23 +30,12 @@ V_RE = CONFIG["version"]["REVISION"]
 V_DATE = CONFIG["version"]["DATE"]
 CODENAME = CONFIG["version"]["CODENAME"]
 
-logging.basicConfig(format=LOGGER_FORMAT, datefmt='[%H:%M:%S]')
-log = logging.getLogger(CONFIG["config"]["NAME"])
-
-"""
-CRITICAL 50
-ERROR    40
-WARNING  30
-INFO     20
-DEBUG    10
-NOTSET    0
-"""
-log.setLevel(LOGGER_LEVEL)
+log.add(sys.stderr, level=LOGGER_LEVEL)
 
 
 def version_fancy():
     return ''.join((
-        "\n",
+        "\n\n",
         " (  (                       (         (           )", "\n",
         " )\))(   ' (   (  (  (  (   )\ (    ( )\       ( /(", "\n",
         "((_)()\ )  )\  )\))( )\))( ((_))\ ) )((_)  (   )\())", "\n",
@@ -55,7 +46,8 @@ def version_fancy():
         "       code name: {0}".format(CODENAME), "\n",
         "  \_/\_/   |_|\__, |\__, | |_| \_, ||___/\___/ \__|",
         "    release date: {0}".format(V_DATE), "\n",
-        "              |___/ |___/      |__/", "\n"
+        "              |___/ |___/      |__/",
+        "                       component: {0}".format(CONFIG["config"]["NAME"]), "\n"
     ))
 
 
