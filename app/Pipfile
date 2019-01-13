@@ -8,6 +8,7 @@ configobj = "*"
 pymongo = "*"
 photon-pump = "*"
 requests = "*"
+loguru = "*"
 
 [dev-packages]
 pytest = "*"
